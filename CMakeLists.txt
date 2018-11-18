@@ -10,4 +10,6 @@ if (WIN32)
 endif()
 
 add_subdirectory(vendor)
+# Validate shaders on build
+add_subdirectory(data)
 add_subdirectory(src)
