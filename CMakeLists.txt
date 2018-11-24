@@ -3,10 +3,14 @@ project(cmc_cg_template)
 
 set(CMAKE_CXX_STANDARD 14)
 
-# Thanks, Windows!
+# Put libraries and binaries into a single folder on Windows
 if (WIN32)
     set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
     set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+else()
+# Put executable files under /bin, libraries under /lib
+    set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
+    set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR}/lib)
 endif()
 
 add_subdirectory(vendor)
