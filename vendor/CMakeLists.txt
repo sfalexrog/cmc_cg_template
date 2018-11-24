@@ -13,7 +13,11 @@ add_subdirectory(glbinding)
 add_library(glbinding::glbinding ALIAS glbinding)
 add_library(glbinding::glbinding-aux ALIAS glbinding-aux)
 
-add_subdirectory(glm)
+# glm is a header-only library, no need to include it as a subdirectory
+# (also, it seems to break some things)
+#add_subdirectory(glm)
+add_library(glm INTERFACE)
+target_include_directories(glm INTERFACE glm)
 add_library(glm::glm ALIAS glm)
 
 # RapidJSON's CMakeLists.txt does not help much, unfortunately
@@ -37,6 +41,9 @@ add_library(imgui STATIC
         )
 target_include_directories(imgui PUBLIC
         imgui
+        )
+target_compile_definitions(imgui PUBLIC
+        IMGUI_DISABLE_OBSOLETE_FUNCTIONS
         )
 
 add_library(imgui::imgui ALIAS imgui)
