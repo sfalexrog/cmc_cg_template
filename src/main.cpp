@@ -7,12 +7,50 @@
 
 #include <glbinding/gl33core/gl.h>
 
+
+#include "util/logger.h"
+#include <string>
+#include <iostream>
+
+#include "gui/imgui_log_window.h"
+
+void consoleLogger(Logger::Severity severity, const std::string& message)
+{
+    switch(severity)
+    {
+        case Logger::Severity::S_DEBUG:
+            std::cout << "[DEBUG] ";
+            break;
+        case Logger::Severity ::S_INFO:
+            std::cout << "[INFO] ";
+            break;
+        case Logger::Severity ::S_WARNING:
+            std::cout << "[WARNING] ";
+            break;
+        case Logger::Severity ::S_ERROR:
+            std::cout << "[ERROR] ";
+            break;
+        case Logger::Severity ::S_FATAL:
+            std::cout << "[FATAL] ";
+            break;
+    }
+
+    std::cout << message << std::endl;
+}
+
 int main(int argc, char** argv)
 {
     using namespace gl33core;
 
+    Logger::addListener(consoleLogger);
+    Logger::addListener(Gui::ImLogger::addMessage);
+
+
+    LogLine(S_DEBUG) << "Initializing SDL...";
     SDL_Init(SDL_INIT_EVERYTHING);
+    LogLine(S_DEBUG) << "Creating window...";
     SDL_Window *w = SDL_CreateWindow("CMC Computer Graphics Example", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 800, SDL_WINDOW_OPENGL);
+    LogLine(S_DEBUG) << "Creating context...";
     const char* glsl_version = "#version 130";
 
     SDL_GL_SetAttribute(SDL_GL_CONTEXT_FLAGS, 0);
@@ -26,6 +64,8 @@ int main(int argc, char** argv)
     glbinding::initialize(reinterpret_cast<glbinding::ContextHandle>(ctx), [](const char* name){return reinterpret_cast<void(*)()>(SDL_GL_GetProcAddress(name));}, true, true);
 
     bool done = false;
+
+    LogLine(S_DEBUG) << "Creating ImGui rendering context...";
 
     // Setup Dear ImGui context
     IMGUI_CHECKVERSION();
@@ -42,6 +82,12 @@ int main(int argc, char** argv)
     bool show_demo_window = true;
     bool show_another_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+    Log(S_DEBUG) << "Showing colors: Debug";
+    Log(S_INFO) << "Showing colors: Info";
+    Log(S_WARNING) << "Showing colors: Warning";
+    Log(S_ERROR) << "Showing colors: Error";
+    Log(S_FATAL) << "Showing colors: Fatal error";
 
     while(!done)
     {
@@ -93,6 +139,7 @@ int main(int argc, char** argv)
                 show_another_window = false;
             ImGui::End();
         }
+        Gui::ImLogger::draw();
 
         // Rendering
         ImGui::Render();

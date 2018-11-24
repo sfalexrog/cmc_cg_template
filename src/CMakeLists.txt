@@ -5,6 +5,21 @@ add_executable(cmc_cg
         main.cpp
         )
 
+# Make everything in the source root accessible throughout the project
+target_include_directories(cmc_cg PRIVATE
+        ${PROJECT_SOURCE_DIR}
+        )
+
+target_sources(cmc_cg PRIVATE
+        util/logger.cpp
+        util/logger.h
+        )
+
+target_sources(cmc_cg PRIVATE
+        gui/imgui_log_window.cpp
+        gui/imgui_log_window.h
+        )
+
 target_sources(cmc_cg PRIVATE
         imgui_impl/imgui_impl_sdl.cpp
         imgui_impl/imgui_impl_opengl3.cpp
