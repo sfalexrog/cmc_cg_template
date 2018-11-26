@@ -11,6 +11,13 @@ target_include_directories(cmc_cg PRIVATE
         )
 
 target_sources(cmc_cg PRIVATE
+        gfx/context.cpp
+        gfx/context.h
+        )
+
+target_sources(cmc_cg PRIVATE
+        util/config.cpp
+        util/config.h
         util/logger.cpp
         util/logger.h
         )
