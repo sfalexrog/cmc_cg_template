@@ -54,9 +54,11 @@ namespace Gui
                         break;
                 }
                 ImGui::PushStyleColor(ImGuiCol_Text, colors[color]);
+                ImGui::PushTextWrapPos(0.0f);
                 ImGui::TextUnformatted(prefix);
                 ImGui::SameLine();
                 ImGui::TextUnformatted(msg.second.c_str());
+                ImGui::PopTextWrapPos();
                 ImGui::PopStyleColor();
             }
         }
