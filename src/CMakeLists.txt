@@ -13,6 +13,10 @@ target_include_directories(cmc_cg PRIVATE
 target_sources(cmc_cg PRIVATE
         gfx/context.cpp
         gfx/context.h
+        gfx/framebuffer.cpp
+        gfx/framebuffer.h
+        gfx/shader.cpp
+        gfx/shader.h
         )
 
 target_sources(cmc_cg PRIVATE
@@ -39,11 +43,13 @@ if (WIN32 AND MINGW)
             )
 endif()
 
+
 target_link_libraries(cmc_cg PRIVATE
         SDL2::SDL2
         glbinding::glbinding
         glbinding::glbinding-aux
         imgui::imgui
+        assimp::assimp
         )
 # glbinding messes up with output paths, so we have to copy the resulting .dll by hand
 # Using static linkage made build times unbearable, absolutely not suitable for rapid prototyping
