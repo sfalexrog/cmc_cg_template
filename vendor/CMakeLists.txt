@@ -47,3 +47,11 @@ target_compile_definitions(imgui PUBLIC
         )
 
 add_library(imgui::imgui ALIAS imgui)
+
+# Add assimp library
+# Build it as a shared library (because link times are not fun)
+set(BUILD_SHARED_LIBS ON)
+# Disable some of the unused importers (fails to build on windows due to string table limitations)
+set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT OFF)
+set(ASSIMP_BUILD_OBJ_IMPORTER ON)
+add_subdirectory(assimp)
