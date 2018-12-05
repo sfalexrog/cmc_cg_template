@@ -16,6 +16,10 @@
 
 #include "gfx/context.h"
 
+#include <assimp/Importer.hpp>
+
+#include "gfx/shader.h"
+
 void consoleLogger(Logger::Severity severity, const std::string& message)
 {
     switch(severity)
@@ -35,6 +39,9 @@ void consoleLogger(Logger::Severity severity, const std::string& message)
         case Logger::Severity ::S_FATAL:
             std::cout << "[FATAL] ";
             break;
+        default:
+            std::cout << "[UNKNOWN!]";
+            break;
     }
 
     std::cout << message << std::endl;
@@ -50,6 +57,14 @@ void loop()
     bool show_another_window = true;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     ImGuiIO &io = ImGui::GetIO();
+
+
+    Gfx::Shader shader;
+
+    shader.addStage("shaders/tonemap_reinhard.vert")
+          .addStage("shaders/tonemap_reinhard.frag")
+          .link();
+
     while (!done)
     {
         SDL_Event ev;
