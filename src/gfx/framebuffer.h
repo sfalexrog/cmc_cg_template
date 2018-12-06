@@ -2,6 +2,8 @@
 #define CMC_CG_TEMPLATE_FRAMEBUFFER_H
 
 #include <glbinding/gl33core/gl.h>
+#include <vector>
+
 
 namespace Gfx
 {
@@ -13,7 +15,7 @@ namespace Gfx
     {
     private:
         GLuint id;
-
+        std::vector<GLuint> ownedRenderbuffers;
 
     public:
 
@@ -27,8 +29,7 @@ namespace Gfx
         bool isComplete();
 
         Framebuffer& attachTexture(GLenum attachment, GLuint textureId, GLint level = 0);
-
-
+        Framebuffer& attachRenderbuffer(GLenum attachment);
 
         GLuint get() const
         {
@@ -38,6 +39,10 @@ namespace Gfx
         ~Framebuffer()
         {
             glDeleteFramebuffers(1, &id);
+            if (ownedRenderbuffers.size() > 0)
+            {
+                glDeleteRenderbuffers((GLsizei)ownedRenderbuffers.size(), ownedRenderbuffers.data());
+            }
 
         }
     };
