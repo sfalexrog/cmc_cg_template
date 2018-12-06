@@ -54,7 +54,7 @@ namespace Gfx
         {
             glLinkProgram(program);
             GLboolean status;
-            glGetProgramiv(program, GL_INFO_LOG_LENGTH, &status);
+            glGetProgramiv(program, GL_LINK_STATUS, &status);
             if (status != GL_TRUE)
             {
                 GLint logLength;
