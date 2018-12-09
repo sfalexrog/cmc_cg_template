@@ -71,7 +71,8 @@ namespace Gfx
 
         if (pitch > MAX_PITCH) pitch = MAX_PITCH;
         if (pitch < -MAX_PITCH) pitch = -MAX_PITCH;
-        dir = glm::vec3();
+        dir = direction(yaw, pitch);
+        return *this;
     }
 
 

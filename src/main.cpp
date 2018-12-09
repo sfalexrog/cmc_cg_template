@@ -92,7 +92,7 @@ void loop()
 
     bool buttonsState[NUM_BUTTONS];
 
-    struct {
+    struct MousePos{
         int x;
         int y;
     } lastMousePos{};
@@ -134,8 +134,21 @@ void loop()
             {
                 c.moveSide(camSpeed);
             }
+        }
+
+        MousePos curMousePos{};
+
+        int mousePressed = SDL_GetMouseState(&curMousePos.x, &curMousePos.y);
+
+        if (mousePressed && !io.WantCaptureMouse)
+        {
+            MousePos delta{curMousePos.x - lastMousePos.x, curMousePos.y - lastMousePos.y};
+            c.rotateX(delta.x * 0.005f)
+             .rotateY(-delta.y * 0.005f);
 
         }
+
+        lastMousePos = curMousePos;
 
         // Start the Dear ImGui frame
         context.startFrame();
@@ -185,7 +198,7 @@ void loop()
         glClearColor(clear_color.x, clear_color.y, clear_color.z, clear_color.w);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        c.setAspect(io.DisplaySize.y / io.DisplaySize.x);
+        c.setAspect(io.DisplaySize.x / io.DisplaySize.y);
 
         s.draw(c, normalShader);
 

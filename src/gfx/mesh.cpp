@@ -50,6 +50,7 @@ namespace Gfx
         {
             glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, idxDataSize, indices.data());
         }
+        return *this;
     }
 
     Mesh::~Mesh()
@@ -59,19 +60,5 @@ namespace Gfx
             glDeleteBuffers(1, &gpuData.vbuffer);
             glDeleteBuffers(1, &gpuData.ibuffer);
         }
-    }
-
-    namespace
-    {
-        Assimp::Importer *getImporter()
-        {
-            static std::unique_ptr<Assimp::Importer> aiImporter;
-            if (!aiImporter)
-            {
-                aiImporter = std::make_unique<Assimp::Importer>();
-            }
-            return aiImporter.get();
-        }
-
     }
 }
