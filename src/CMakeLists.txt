@@ -11,10 +11,16 @@ target_include_directories(cmc_cg PRIVATE
         )
 
 target_sources(cmc_cg PRIVATE
+        gfx/camera.cpp
+        gfx/camera.h
         gfx/context.cpp
         gfx/context.h
         gfx/framebuffer.cpp
         gfx/framebuffer.h
+        gfx/mesh.cpp
+        gfx/mesh.h
+        gfx/scene.cpp
+        gfx/scene.h
         gfx/shader.cpp
         gfx/shader.h
         )
@@ -24,6 +30,8 @@ target_sources(cmc_cg PRIVATE
         util/config.h
         util/logger.cpp
         util/logger.h
+        util/sceneloader.cpp
+        util/sceneloader.h
         )
 
 target_sources(cmc_cg PRIVATE
@@ -50,6 +58,7 @@ target_link_libraries(cmc_cg PRIVATE
         glbinding::glbinding-aux
         imgui::imgui
         assimp::assimp
+        glm::glm
         )
 # glbinding messes up with output paths, so we have to copy the resulting .dll by hand
 # Using static linkage made build times unbearable, absolutely not suitable for rapid prototyping
