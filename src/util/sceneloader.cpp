@@ -21,7 +21,7 @@ Scene loadSceneFromFile(const char* filename)
             aiProcess_Triangulate |
             aiProcess_OptimizeMeshes |
             aiProcess_OptimizeGraph |
-            aiProcess_GenNormals
+            aiProcess_GenSmoothNormals
             );
 
     if (scene->mRootNode)
