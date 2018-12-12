@@ -55,3 +55,8 @@ set(BUILD_SHARED_LIBS ON)
 set(ASSIMP_BUILD_ALL_IMPORTERS_BY_DEFAULT OFF)
 set(ASSIMP_BUILD_OBJ_IMPORTER ON)
 add_subdirectory(assimp)
+
+# Add stb libraries
+add_library(stb INTERFACE)
+target_include_directories(stb INTERFACE stb)
+add_library(stb::stb ALIAS stb)
